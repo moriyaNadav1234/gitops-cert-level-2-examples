@@ -21,4 +21,17 @@ spec:
   syncPolicy:
     syncOptions:
       - CreateNamespace=true  
+
+  # Ignore differences for problematic fields
+  ignoreDifferences:
+    # Deployment: ignore the 'creation' field
+    - group: apps
+      kind: Deployment
+      jqPathExpressions:
+        - '.metadata.annotations.creation'
+    # Secret: ignore the 'my-password' field
+    - group: ''
+      kind: Secret
+      jqPathExpressions:
+        - '.data["my-password"]'
    
